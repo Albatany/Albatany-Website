@@ -1,2 +1,106 @@
-# Personal-Website
-My source code for my personal website.
+# Albatany Portfolio — v5.0
+
+Major update dari portfolio v4.1, tetap memakai identitas navy/gelap, aksen merah, font VCR, pixel art, dan pemutar vinyl. Target hosting: **https://albatany.vercel.app/**.
+
+## Mulai dari sini
+
+1. Ekstrak paket ini ke folder baru. Simpan backup website lama.
+2. Salin kembali aset galeri, musik, atau video yang sengaja tidak disertakan ke path aslinya di `assets/`. Daftar lengkap: [docs/ASSETS.md](docs/ASSETS.md).
+3. Install **Node.js 22 LTS** dan npm. Buka terminal di folder yang berisi `package.json`.
+4. Jalankan:
+
+```bash
+npm ci
+```
+
+Linux/macOS:
+
+```bash
+cp .env.example .env.local
+```
+
+Windows CMD:
+
+```cmd
+copy .env.example .env.local
+```
+
+5. Isi `.env.local` mengikuti [INTEGRATIONS.md](INTEGRATIONS.md). Boleh kosong dulu untuk melihat situs dan fallback.
+6. Jalankan:
+
+```bash
+npm run dev
+```
+
+Buka **http://localhost:4173**. Server lokal menjalankan handler API yang sama dengan Vercel; jangan membuka HTML melalui `file://`. `npm run dev` membangun situs sebelum mulai. Setelah mengedit konten/kode, hentikan dengan Ctrl+C lalu jalankan lagi. Tidak ada hot reload.
+
+## Yang berubah
+
+| Area | Perilaku v5 |
+|---|---|
+| Visual | Identitas lama dipertahankan; navbar mengambang, grid lebih ringkas, ritme halaman lebih pendek, responsif |
+| Background | Gambar ringan sebagai default; konfigurasi MP4, WebM, GIF, PNG, JPG, WebP, AVIF, SVG |
+| Projects | 10 proyek, termasuk ZT-HAC, Bridge, OfflineBox, ChronoLens; pencarian, kategori, parallax terbatas pada preview game |
+| Reaksi | Google/GitHub login; satu reaksi aktif per akun per proyek; klik lagi untuk membatalkan |
+| Guestbook | Tombol tetap di kanan bawah, drawer, nama samaran, paginasi, hapus pesan sendiri, batas spam di database |
+| Stats | WakaTime + GitHub di atas, Monkeytype, Discord, Steam di bawah; repository populer dari GitHub |
+| GitHub calendar | Kontribusi harian dari GraphQL; hover, fokus keyboard, atau sentuh untuk melihat jumlah per tanggal |
+| Achievements | Koleksi, filter, pencarian, detail PDF, tombol validasi opsional per item |
+| Gallery | Previous/Next, tombol panah keyboard, swipe; mengikuti kategori yang aktif |
+| Music | Vinyl lama tetap ada; sembunyikan seluruh disk lalu panggil lagi melalui tab Music |
+| Command Palette | Ctrl+K / Cmd+K, pencarian, ↑/↓, Enter, Escape; tersedia juga tombol navbar |
+| About | GSAP ScrollTrigger pin + scrub, cerita pixel art; layout biasa pada layar kecil/reduced motion |
+| Terminal | Playground perintah yang aman: `help`, `whoami`, `skills`, `projects`, `contact`, `socials`, `date`, `clear`, `open about` |
+| Contact | Validasi, honeypot, Turnstile, pengiriman Resend, status mengirim/diterima/gagal; alternatif email |
+| Share preview | PNG 1600×900 dari aset asli, Open Graph dan Twitter Card pada setiap halaman |
+| Privasi | Halaman privasi, identitas publik hanya alias, hapus kontribusi sendiri, tanpa service-role key di browser |
+
+Fitur login, penyimpanan komunitas, pengiriman email, dan sebagian statistik **baru aktif setelah kredensial milikmu dipasang**. Tampilan tidak memalsukan angka atau keberhasilan pengiriman saat koneksi belum tersedia.
+
+## Panduan
+
+- [INTEGRATIONS.md](INTEGRATIONS.md): Supabase Google/GitHub, GitHub calendar, Monkeytype, WakaTime, Discord, Steam, formulir kontak.
+- [docs/DEPLOY-VERCEL.md](docs/DEPLOY-VERCEL.md): deploy melalui CMD/terminal ke **project Vercel lama**.
+- [docs/EDITING.md](docs/EDITING.md): tambah proyek, galeri, sertifikat, tautan validasi, cerita About, musik, background, thumbnail.
+- [docs/ASSETS.md](docs/ASSETS.md): aset yang belum ada dan cara mengembalikannya.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): struktur, aliran data, keputusan privasi, moderasi, batas operasional.
+- [docs/VERIFICATION.md](docs/VERIFICATION.md): cakupan pengujian dan pemeriksaan sebelum produksi.
+- [CHANGELOG.md](CHANGELOG.md): daftar perubahan dari v4.1 ke v5.0.
+
+## Perintah
+
+```bash
+npm run build
+npm run check
+npm test
+npm run test:http
+```
+
+`build` menghasilkan `dist/`, menyusun bundle modular, membuat metadata HTML, sitemap, robots, serta thumbnail sosial. Jangan mengedit `dist/`: perubahan akan ditimpa build berikutnya. Aset berat yang sengaja tidak ada tidak menggagalkan build.
+
+## Struktur
+
+```text
+assets/js/content.js       Data yang paling sering kamu edit
+assets/js/site.js          Renderer utama dan interaksi lama yang dipertahankan
+assets/css/site.css        Fondasi visual v4.1
+assets/css/update.css      Penyesuaian visual dan komponen v5
+assets/css/v6.css          Dropdown, bendera, dock, thumbnail project, kontak, Guides/Devlogs/Papers
+assets/css/gendut.css      Halaman Gendut <3 (hanya dimuat di halaman itu)
+assets/guides/, assets/papers/   PDF guide book dan paper
+assets/images/             Foto, sertifikat, pixel art, thumbnail sosial
+src/                       Fitur modular: palette, komunitas, statistik, cerita
+api/                       Handler Vercel untuk data publik dan kontak
+server/                    Utilitas backend
+supabase/schema.sql        Skema privat, RLS, dan RPC dengan pemeriksaan pemilik
+site.config.mjs            URL, metadata, dan konfigurasi thumbnail
+scripts/                   Build, server lokal, validasi
+```
+
+## Catatan penting
+
+- ZIP sumber mengandung `.env`/`.env.local`. Kunci asli **tidak disertakan** di hasil ini. Ganti kunci WakaTime/Steam dan token lain yang masih aktif karena sudah pernah dibagikan di arsip. Cabut token Vercel jika masih valid. Gunakan kunci baru di `.env.local`/Vercel.
+- Login Google/GitHub tidak bisa dijanjikan anonim terhadap administrator autentikasi. Supabase menyimpan identitas login dan administrator proyek dapat mengaksesnya. Yang dibatasi oleh aplikasi adalah **data yang tampil ke publik**, kebutuhan scope, serta penyimpanan di tabel komunitas. Penjelasan transparan sudah ada di modal login dan `privacy.html`.
+- Website produksi lama **belum diubah** oleh paket ini. Ikuti panduan deploy setelah mengisi layanan dan mengembalikan aset yang diperlukan.
+- Empat deskripsi proyek baru diambil dari metadata repository publik; kartu ilustrasi berlabel workspace adalah visual presentasi, bukan screenshot aplikasi.
+- Contoh tombol “Cek Validasi” memakai `example.com` dan diberi label **DEMO LINK**. Ganti sebelum dipublikasikan sebagai bukti validasi.
