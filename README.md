@@ -2,7 +2,7 @@
 
 > Push the limits.
 
-The personal portfolio of Aziz Albatany, covering software and hardware work: AI applications, game design, robotics, and cybersecurity. Version 5.0 keeps the established identity of the site (dark navy palette, red accent, VCR font, pixel art, and the vinyl music player) and adds a community layer, live statistics, and a command palette.
+The personal portfolio of Aziz Albatany, covering software and hardware work: AI applications, game design, robotics, and cybersecurity. Version 6.0 keeps the established identity of the site (dark navy palette, red accent, VCR font, pixel art, and the vinyl music player) and adds a community layer, live statistics, and a command palette.
 
 ![Live site](https://img.shields.io/badge/live-albatany.vercel.app-e63946?style=flat-square)
 ![Node.js](https://img.shields.io/badge/node-22%20LTS-339933?style=flat-square)
